@@ -1630,11 +1630,11 @@
 
     // ========== UTILITY FUNCTIONS ==========
     
-    // Generate random referral code (9 characters)
+    // Generate random referral code (12 characters)
     function generateReferralCode() {
       const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
       let code = '';
-      for (let i = 0; i < 9; i++) {
+      for (let i = 0; i < 12; i++) {
         code += chars[Math.floor(Math.random() * chars.length)];
       }
       return code;
@@ -2702,12 +2702,17 @@
     // ========== INIT ==========
     window.onload = function() {
       if (Object.keys(users).length === 0) {
+        // Generate random 12-digit codes for demo accounts
+        const adminCode = generateReferralCode();
+        const internCode = generateReferralCode();
+        const d1Code = generateReferralCode();
+        
         users['0756673144'] = {
           fullName: 'Admin User',
           phone: '0756673144',
           country: 'Uganda',
           password: 'admin123',
-          referralCode: 'ADMIN12345',
+          referralCode: adminCode,
           memberLevel: 9,
           memberExpiry: new Date(Date.now() + 365*24*60*60*1000).toISOString(),
           operatingWallet: 1000000,
@@ -2727,7 +2732,7 @@
           phone: '0777123456',
           country: 'Uganda',
           password: '123456',
-          referralCode: 'INTERN789',
+          referralCode: internCode,
           memberLevel: 0,
           memberExpiry: new Date(Date.now() + 4*24*60*60*1000).toISOString(),
           operatingWallet: 100000,
@@ -2747,7 +2752,7 @@
           phone: '0788123456',
           country: 'Uganda',
           password: '123456',
-          referralCode: 'D1CODE345',
+          referralCode: d1Code,
           memberLevel: 1,
           memberExpiry: new Date(Date.now() + 365*24*60*60*1000).toISOString(),
           operatingWallet: 150000,
@@ -2765,6 +2770,11 @@
         };
 
         localStorage.setItem('cueUsers', JSON.stringify(users));
+        
+        // Log the codes so you know them (remove in production)
+        console.log('Admin Code:', adminCode);
+        console.log('Intern Code:', internCode);
+        console.log('D1 Code:', d1Code);
       }
 
       handleReferralLink();
